@@ -33,33 +33,31 @@ function App() {
     setModal(true);
   };
 
-  useEffect(() => {}, [tasks]);
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
 
   const handleFilter = () => {
     let filtered = tasks;
 
-    
     if (info.title) {
       filtered = filtered.filter((task) =>
         task.title.toLowerCase().includes(info.title.toLowerCase())
       );
     }
 
-    
     if (info.description) {
       filtered = filtered.filter((task) =>
         task.description.toLowerCase().includes(info.description.toLowerCase())
       );
     }
 
-    
     if (info.startDate) {
       filtered = filtered.filter(
         (task) => new Date(task.date) >= new Date(info.startDate)
       );
     }
 
-    
     if (info.endDate) {
       filtered = filtered.filter(
         (task) => new Date(task.date) <= new Date(info.endDate)
