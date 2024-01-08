@@ -26,6 +26,12 @@ function App() {
     description: "",
     date: "",
   });
+  const [filterInfo, setFilterInfo] = useState({
+    title: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+  });
 
   const handleEdit = (editedTask) => {
     setEdit(true);
@@ -34,37 +40,44 @@ function App() {
   };
 
   useEffect(() => {
-    setFilteredTasks(tasks);
-  }, [tasks]);
-
-  const handleFilter = () => {
     let filtered = tasks;
 
-    if (info.title) {
+    if (filterInfo.title) {
       filtered = filtered.filter((task) =>
-        task.title.toLowerCase().includes(info.title.toLowerCase())
+        task.title.toLowerCase().includes(filterInfo.title.toLowerCase())
       );
     }
 
-    if (info.description) {
+    if (filterInfo.description) {
       filtered = filtered.filter((task) =>
-        task.description.toLowerCase().includes(info.description.toLowerCase())
+        task.description
+          .toLowerCase()
+          .includes(filterInfo.description.toLowerCase())
       );
     }
 
-    if (info.startDate) {
+    if (filterInfo.startDate) {
       filtered = filtered.filter(
-        (task) => new Date(task.date) >= new Date(info.startDate)
+        (task) => new Date(task.date) >= new Date(filterInfo.startDate)
       );
     }
 
-    if (info.endDate) {
+    if (filterInfo.endDate) {
       filtered = filtered.filter(
-        (task) => new Date(task.date) <= new Date(info.endDate)
+        (task) => new Date(task.date) <= new Date(filterInfo.endDate)
       );
     }
 
     setFilteredTasks(filtered);
+  }, [filterInfo, tasks]);
+
+  const handleFilter = () => {
+    setFilterInfo({
+      title: info.title,
+      description: info.description,
+      startDate: info.startDate,
+      endDate: info.endDate,
+    });
   };
 
   return (
